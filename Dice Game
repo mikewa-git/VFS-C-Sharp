@@ -1,0 +1,428 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MenuExample
+{
+    class Program
+    {
+        
+        static void Main(string[] args)
+        {
+            
+            //introduce character(Rocket the Raccoon)
+            Console.WriteLine("hello?");
+            Console.ReadKey();
+            Console.WriteLine("oh it's you...");
+            Console.ReadKey();
+            Console.WriteLine("who am I you ask? I'm Rocket - welcome to my game of dice");
+            Console.WriteLine("Thanos sort of made everyone I cared about disappear so here I am gambling the rest of my life away");
+            Console.WriteLine("do you like gambling?");
+            Console.ReadKey();
+            // wait for the user to hit A/a or B/b
+            Decision();
+
+
+            //decision is in a loop. If you pick A/a you proceed to game othertise "return"
+            
+            while (true)
+
+            {
+                string decision = Console.ReadLine();
+
+               
+                if (decision == "A" || decision == "a")
+                {
+                    
+                    // ask for user's name
+                    Console.WriteLine("Whats your name?");
+                    string userName = Console.ReadLine();
+
+                    //rules of the game.
+                    Console.WriteLine("Anyways " + (userName) + ", it's important you understand how to play the game");
+                    Console.ReadKey();
+                    Console.WriteLine("1. You'll start off with $200" +
+                        "");
+                    Console.ReadKey();
+                    Console.WriteLine("2. Choose how much you wanna bet. Remember... the more you bet, you more you GET!" +
+                        "");
+                    Console.ReadKey();
+                    Console.WriteLine("3. Choose what type of bet you wanna make and PRAY YOU GET LUCKY HAHAHAHAHA" +
+                        "");
+                    Console.ReadKey();
+                    Console.WriteLine("Now, ARE YOU READY?!" +
+                        "");
+                    Console.ReadKey();
+
+                    //Clear the screen before starting
+                    Console.Clear();
+                    //Create a random number generator
+                    Random myRandNumGenerator = new Random();
+                    Console.WriteLine("Here We Go" + (userName));
+                    //add funds to wallet
+                    int wallet = 800;
+
+
+                    //while the wallet within defined integer amounts, the game will proceed.
+                    while (wallet < 1000)
+                    {
+
+                        if (wallet > 0)
+                        {
+                            //Clear the screen before starting
+                            Console.Clear();
+
+                            // show the wallet at the top in green.
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("you have $ " + (wallet));
+                            Console.ResetColor();
+
+                            //Show the menu for wager types and exit
+                            ShowMenu();
+
+                            //Ask the user to select one of the options
+                            string menuChoice = Console.ReadLine();
+
+                            //Check which option the user selected
+                            if (menuChoice == "A" || menuChoice == "a")
+                            {
+                                //how much does the user want to bet?
+                                Console.WriteLine("How much do you want to bet?");
+                                int wagerAmount = int.Parse(Console.ReadLine());
+                                if (wagerAmount < wallet || wagerAmount == wallet)
+                                {
+                                    //Ask the generator for a random number between 1 and 6. Store the result.
+                                    //NOTE: the Next() function includes the min value, but EXCLUDES the max value
+                                    int dice1 = myRandNumGenerator.Next(1, 7);
+                                    int dice2 = myRandNumGenerator.Next(1, 7);
+                                    int dice3 = myRandNumGenerator.Next(1, 7);
+
+
+                                    //Print the numbers that were stored
+                                    Console.WriteLine("Dice 1: " + dice1);
+                                    Console.WriteLine("Dice 2: " + dice2);
+                                    Console.WriteLine("Dice 3: " + dice3);
+                                    Console.WriteLine("");
+                                    //total of the random dice
+                                    int diceAmount = (dice1 + dice2 + dice3);
+
+
+
+                                    // winning conditions for Big is 11 - 17
+
+                                    if (diceAmount >= 11 && diceAmount <= 17)
+                                    {
+                                        //different color for winning
+                                        Console.ForegroundColor = ConsoleColor.Green;
+                                        Console.WriteLine("Go big or go home! You won $" + wagerAmount + "\r\n");
+                                        wallet = wallet + wagerAmount;
+                                        Console.WriteLine("you now have: $" + wallet);
+                                        Console.ResetColor();
+                                    }
+                                    else
+                                    {
+                                        // different color for losing
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine("You lost $" + wagerAmount + "\r\n");
+                                        wallet = wallet - wagerAmount;
+                                        Console.WriteLine("you now have: $" + wallet);
+                                        Console.ResetColor();
+                                    }
+
+                                }
+                                else
+                                {
+                                    //invalid option message
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("C'mon pal quit pulling my leg here. Pick a valid option.");
+                                    Console.ResetColor();
+                                }
+                            }
+                            //"else if" winning conditions for the other wager types.
+                            else if (menuChoice == "B" || menuChoice == "b")
+                            {
+                                Console.WriteLine("how much do you want to bet");
+                                int wagerAmount = int.Parse(Console.ReadLine());
+                                if (wagerAmount < wallet || wagerAmount == wallet)
+                                {
+
+                                    int dice1 = myRandNumGenerator.Next(1, 7);
+                                    int dice2 = myRandNumGenerator.Next(1, 7);
+                                    int dice3 = myRandNumGenerator.Next(1, 7);
+
+
+
+                                    Console.WriteLine("Dice 1: " + dice1);
+                                    Console.WriteLine("Dice 2: " + dice2);
+                                    Console.WriteLine("Dice 3: " + dice3);
+                                    Console.WriteLine("");
+
+                                    int diceAmount = (dice1 + dice2 + dice3);
+
+
+                                    // for small wager, conditions are if the diceAmount is between 0 and 11
+                                    if (diceAmount >= 1 && diceAmount <= 10)
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Green;
+                                        Console.WriteLine("Slowly but surely, you got $" + wagerAmount + "\r\n");
+                                        wallet = wallet + wagerAmount;
+                                        Console.WriteLine("you now have: $" + wallet);
+                                        Console.ResetColor();
+                                    }
+                                    else
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine("You win 1 to 1: $" + wagerAmount + "\r\n");
+                                        wallet = wallet - wagerAmount;
+                                        Console.WriteLine("You lost $" + wallet);
+                                        Console.ResetColor();
+                                    }
+
+                                }
+                                else
+                                {
+                                    //User did not select a valid option
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("C'mon pal quit pulling my leg here. Pick a valid option.");
+                                    Console.ResetColor();
+                                }
+                            }
+                            else if (menuChoice == "C" || menuChoice == "c")
+                            {
+                                Console.WriteLine("how much do you want to bet");
+                                int wagerAmount = int.Parse(Console.ReadLine());
+                                if (wagerAmount < wallet || wagerAmount == wallet)
+                                {
+                                    int dice1 = myRandNumGenerator.Next(1, 7);
+                                    int dice2 = myRandNumGenerator.Next(1, 7);
+                                    int dice3 = myRandNumGenerator.Next(1, 7);
+
+
+
+                                    Console.WriteLine("Dice 1: " + dice1);
+                                    Console.WriteLine("Dice 2: " + dice2);
+                                    Console.WriteLine("Dice 3: " + dice3);
+                                    Console.WriteLine("");
+
+                                    int diceAmount = (dice1 + dice2 + dice3);
+
+
+
+                                    // winning conditions for odd numbers. Odd number diceAmount always divisible by two with a leftover of 1.
+
+                                    if (diceAmount % 2 == 1 && dice1 != dice3)
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Green;
+                                        Console.WriteLine("The odds are in your favor... get it? here's $" + wagerAmount + "\r\n");
+                                        wallet = wallet + wagerAmount;
+                                        Console.WriteLine("you now have: $" + wallet);
+                                        Console.ResetColor();
+                                    }
+                                    else
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine("You win 1 to 1: $" + wagerAmount + "\r\n");
+                                        wallet = wallet - wagerAmount;
+                                        Console.WriteLine("You lost $" + wallet);
+                                        Console.ResetColor();
+                                    }
+
+                                }
+                                else
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("C'mon pal quit pulling my leg here. Pick a valid option.");
+                                    Console.ResetColor();
+                                }
+                            }
+                            else if (menuChoice == "D" || menuChoice == "d")
+                            {
+                                Console.WriteLine("how much do you want to bet");
+                                int wagerAmount = int.Parse(Console.ReadLine());
+                                if (wagerAmount < wallet || wagerAmount == wallet)
+                                {
+                                    int dice1 = myRandNumGenerator.Next(1, 7);
+                                    int dice2 = myRandNumGenerator.Next(1, 7);
+                                    int dice3 = myRandNumGenerator.Next(1, 7);
+
+
+
+                                    Console.WriteLine("Dice 1: " + dice1);
+                                    Console.WriteLine("Dice 2: " + dice2);
+                                    Console.WriteLine("Dice 3: " + dice3);
+                                    Console.WriteLine("");
+
+                                    int diceAmount = (dice1 + dice2 + dice3);
+
+
+
+                                    // even dice only works if all the numbers are even BUT also if u get two odds and one even it will still work so I added a rule that two of the dice cant be the same)
+
+                                    if (diceAmount % 2 == 0 && dice1 != dice3)
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Green;
+                                        Console.WriteLine("this EVENing is working out in your favor... here's $" + wagerAmount + "\r\n");
+                                        wallet = wallet + wagerAmount;
+                                        Console.WriteLine("you now have: $" + wallet);
+                                        Console.ResetColor();
+                                    }
+                                    else
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine("You win 1 to 1: $" + wagerAmount + "\r\n");
+                                        wallet = wallet - wagerAmount;
+                                        Console.WriteLine("You lost $" + wallet);
+                                        Console.ResetColor();
+                                    }
+
+                                }
+
+                                else
+                                {
+
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("C'mon pal quit pulling my leg here. Pick a valid option.");
+                                    Console.ResetColor();
+                                }
+                            }
+                            else if (menuChoice == "E" || menuChoice == "e")
+                            {
+                                Console.WriteLine("how much do you want to bet");
+                                int wagerAmount = int.Parse(Console.ReadLine());
+                                if (wagerAmount < wallet || wagerAmount == wallet)
+                                {
+
+                                    int dice1 = myRandNumGenerator.Next(1, 7);
+                                    int dice2 = myRandNumGenerator.Next(1, 7);
+                                    int dice3 = myRandNumGenerator.Next(1, 7);
+
+
+
+                                    Console.WriteLine("Dice 1: " + dice1);
+                                    Console.WriteLine("Dice 2: " + dice2);
+                                    Console.WriteLine("Dice 3: " + dice3);
+                                    Console.WriteLine("");
+
+                                    int diceAmount = (dice1 + dice2 + dice3);
+
+
+
+                                    // winning conditions for triples. dice1 = dice2 and dice2 = dice3. Pretty straight forward..
+
+                                    if (dice1 == dice2 || dice2 == dice3)
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Green;
+                                        Console.WriteLine("Triples get a bigger reward... Good on ya pal! Here's $" + wagerAmount * 4 + "\r\n");
+                                        wallet = wallet + (wagerAmount);
+                                        Console.WriteLine("you now have: $" + wallet);
+                                        Console.ResetColor();
+                                    }
+                                    else
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine("You lose: $ " + wagerAmount + "\r\n");
+                                        wallet = wallet - wagerAmount;
+                                        Console.WriteLine("You lost $" + wallet);
+                                        Console.ResetColor();
+                                    }
+
+                                }
+                                else
+                                {
+
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("C'mon pal quit pulling my leg here. Pick a valid option.");
+                                    Console.ResetColor();
+                                }
+                            }
+                            //choice of X results in exit of application.
+                            else if (menuChoice == "X" || menuChoice == "x")
+                            {
+                                Console.WriteLine("Smell ya later pal!");
+                                Console.ReadKey();
+                                return;
+
+                            }
+                            else
+                            {
+
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("C'mon pal quit pulling my leg here. Pick a valid option.");
+                                Console.ResetColor();
+                            }
+
+                            //Wait for the user to press a key before showing the menu again.
+                            Console.WriteLine("\n\nPress any key to continue...");
+                            Console.ReadKey();
+
+
+                        }
+                        else if (wallet >= 1000)
+                        {
+                            Console.WriteLine("congratulations pal, YOU WON! now lets go blow all this cash... cmon, I know a place.");
+                            Console.ReadKey();
+                            return;
+                            
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine("you lost!");
+                            return;
+                        }
+                            
+                        
+                    }
+                }
+                //back to the original loop/ if player doesn't want to gamble then they can quit early on.
+                else if (decision == "B" || decision =="b")
+                {
+                  
+                    Console.WriteLine("pfft waste my time" +
+                        "!");
+                    Console.ReadKey();
+                    return;
+
+                }
+                else
+                {
+                    //User did not select a valid option
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("C'mon pal quit pulling my leg here. Pick a valid option.");
+                    Console.ResetColor();
+                    Console.ReadKey();
+                    
+
+                }
+                
+            }
+
+           
+
+        }
+        //menu for if the player wants to play.
+        static void Decision()
+        {
+            Console.WriteLine("--------------- Wanna try your luck? ------------------");
+            Console.WriteLine("A.\t Yes");
+            Console.WriteLine("B.\t No");
+            Console.WriteLine("---------------------------------------");
+            Console.WriteLine("Select an option and press Enter...");
+        }
+        //A separate function used to print the menu content.
+        static void ShowMenu()
+        {
+            Console.WriteLine("--------------- MENU ------------------");
+            Console.WriteLine("A.\t Big");
+            Console.WriteLine("B.\t Small");
+            Console.WriteLine("C.\t Odd");
+            Console.WriteLine("D.\t Even");
+            Console.WriteLine("E.\t Triples");
+            Console.WriteLine("X.\t Exit");
+            Console.WriteLine("---------------------------------------");
+            Console.WriteLine("Select an option and press Enter...");
+        }
+    }
+}
